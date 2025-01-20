@@ -1,0 +1,5 @@
+name: Assets
+
+preview: false
+
+output: lib/config/assets/assets.dart
