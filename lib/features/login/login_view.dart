@@ -1,13 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:olearis_test_task/config/assets/assets.dart';
 import 'package:olearis_test_task/config/navigation/app_router.gr.dart';
 import 'package:olearis_test_task/config/resources/app_strings.dart';
 import 'package:olearis_test_task/features/login/cubit/login_view/login_view_cubit.dart';
 import 'package:olearis_test_task/features/login/cubit/login_view/login_view_state.dart';
 import 'package:olearis_test_task/features/shared/app_button.dart';
+import 'package:olearis_test_task/features/shared/app_logo.dart';
 
 @RoutePage()
 class LoginView extends StatelessWidget {
@@ -48,11 +47,7 @@ class LoginView extends StatelessWidget {
                     spacing: 10,
                     children: [
                       const Spacer(),
-                      SvgPicture.asset(
-                        Assets.ASSETS_SVG_LOGO_SVG,
-                        width: double.infinity,
-                        height: 100,
-                      ),
+                      const AppLogo(),
                       const Spacer(),
                       TextField(
                         decoration: const InputDecoration(

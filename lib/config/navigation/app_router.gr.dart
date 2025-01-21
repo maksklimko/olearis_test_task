@@ -24,7 +24,7 @@ class HomeRoute extends _i3.PageRouteInfo<void> {
   static _i3.PageInfo page = _i3.PageInfo(
     name,
     builder: (data) {
-      return const _i1.HomeView();
+      return _i1.HomeView();
     },
   );
 }
