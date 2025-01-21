@@ -1,14 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:olearis_test_task/config/assets/assets.dart';
 import 'package:olearis_test_task/config/navigation/app_router.gr.dart';
 import 'package:olearis_test_task/config/resources/app_strings.dart';
+import 'package:olearis_test_task/features/login/cubit/login_view/login_view_cubit.dart';
+import 'package:olearis_test_task/features/login/cubit/login_view/login_view_state.dart';
 import 'package:olearis_test_task/features/shared/app_button.dart';
 
 @RoutePage()
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  LoginView({super.key});
+
+  final screenCubit = LoginViewCubit();
 
   @override
   Widget build(BuildContext context) {
@@ -19,53 +24,66 @@ class LoginView extends StatelessWidget {
           AppStrings.signIn,
         ),
       ),
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                child: IntrinsicHeight(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    child: Column(
-                      spacing: 10,
-                      children: [
-                        const Spacer(),
-                        SvgPicture.asset(
-                          Assets.ASSETS_SVG_LOGO_SVG,
-                          width: double.infinity,
-                          height: 100,
+      body: BlocBuilder<LoginViewCubit, LoginViewState>(
+        bloc: screenCubit,
+        builder: (BuildContext context, LoginViewState state) {
+          return _buildBody(state);
+        },
+      ),
+    );
+  }
+
+  Widget _buildBody(LoginViewState state) {
+    return SafeArea(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: IntrinsicHeight(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Column(
+                    spacing: 10,
+                    children: [
+                      const Spacer(),
+                      SvgPicture.asset(
+                        Assets.ASSETS_SVG_LOGO_SVG,
+                        width: double.infinity,
+                        height: 100,
+                      ),
+                      const Spacer(),
+                      TextField(
+                        decoration: const InputDecoration(
+                          label: Text(AppStrings.login),
                         ),
-                        const Spacer(),
-                        TextField(
-                          decoration: const InputDecoration(
-                            label: Text(AppStrings.login),
-                          ),
-                          controller: TextEditingController(),
-                        ),
-                        TextField(
+                        onChanged: screenCubit.updateEmail,
+                      ),
+                      TextField(
                           decoration: const InputDecoration(
                             label: Text(AppStrings.password),
                           ),
-                          controller: TextEditingController(),
-                        ),
-                        const Spacer(flex: 3),
-                        AppButton(
-                          title: AppStrings.continueString,
-                          onTap: () {
+                          onChanged: screenCubit.updatePassword),
+                      const Spacer(flex: 3),
+                      AppButton(
+                        isEnabled: state.isValid,
+                        isLoading: state.isLoading,
+                        title: AppStrings.continueString,
+                        onTap: () async {
+                          await screenCubit.onContinueButtonTap();
+                          if (context.mounted) {
                             AutoRouter.of(context).push(const HomeRoute());
-                          },
-                        )
-                      ],
-                    ),
+                          }
+                        },
+                      )
+                    ],
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -18,12 +18,14 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.blue,
+      color: isEnabled ? AppColors.blue : AppColors.grey,
       borderRadius: BorderRadius.circular(5),
       child: InkWell(
         onTap: isEnabled ? onTap : null,
-        child: SizedBox(
+        child: Container(
           height: 35,
+          width: 100,
+          alignment: Alignment.center,
           child: _content(context),
         ),
       ),
@@ -31,20 +33,21 @@ class AppButton extends StatelessWidget {
   }
 
   Widget _content(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Center(
-        widthFactor: 1,
-        child: isLoading
-            ? const CircularProgressIndicator()
-            : Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge
-                    ?.copyWith(color: AppColors.white),
-              ),
-      ),
-    );
+    return isLoading
+        ? const SizedBox(
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(
+              color: AppColors.white,
+              strokeWidth: 2,
+            ),
+          )
+        : Text(
+            title,
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge
+                ?.copyWith(color: AppColors.white),
+          );
   }
 }
