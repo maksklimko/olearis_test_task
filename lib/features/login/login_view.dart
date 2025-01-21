@@ -7,12 +7,28 @@ import 'package:olearis_test_task/features/login/cubit/login_view/login_view_cub
 import 'package:olearis_test_task/features/login/cubit/login_view/login_view_state.dart';
 import 'package:olearis_test_task/features/shared/app_button.dart';
 import 'package:olearis_test_task/features/shared/app_logo.dart';
+import 'package:olearis_test_task/features/shared/app_textfield.dart';
 
 @RoutePage()
-class LoginView extends StatelessWidget {
-  LoginView({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
   final screenCubit = LoginViewCubit();
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,17 +65,16 @@ class LoginView extends StatelessWidget {
                       const Spacer(),
                       const AppLogo(),
                       const Spacer(),
-                      TextField(
-                        decoration: const InputDecoration(
-                          label: Text(AppStrings.login),
-                        ),
+                      AppTextfield(
+                        label: AppStrings.login,
+                        controller: emailController,
                         onChanged: screenCubit.updateEmail,
                       ),
-                      TextField(
-                          decoration: const InputDecoration(
-                            label: Text(AppStrings.password),
-                          ),
-                          onChanged: screenCubit.updatePassword),
+                      AppTextfield(
+                        label: AppStrings.password,
+                        controller: passwordController,
+                        onChanged: screenCubit.updatePassword,
+                      ),
                       const Spacer(flex: 3),
                       AppButton(
                         isEnabled: state.isValid,
