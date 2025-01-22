@@ -38,11 +38,8 @@ class LoginViewCubit extends Cubit<LoginViewState> {
     );
   }
 
-  // bool validateFields({String? email, String? password}) {
-  //   return (email ?? state.email).isNotEmpty &&
-  //       (password ?? state.password).isNotEmpty;
-  // }
   bool validateFields({String? email, String? password}) {
-    return true;
+    return (email ?? state.email).isNotEmpty &&
+        (password ?? state.password).isNotEmpty;
   }
 }
