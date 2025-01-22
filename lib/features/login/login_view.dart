@@ -81,9 +81,10 @@ class _LoginViewState extends State<LoginView> {
                         isLoading: state.isLoading,
                         title: AppStrings.continueString,
                         onTap: () async {
-                          await screenCubit.onContinueButtonTap();
-                          if (context.mounted) {
-                            AutoRouter.of(context).push(const HomeRoute());
+                          final result =
+                              await screenCubit.onContinueButtonTap();
+                          if (context.mounted && result) {
+                            AutoRouter.of(context).push(HomeRoute());
                           }
                         },
                       )

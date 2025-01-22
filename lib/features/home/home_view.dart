@@ -26,7 +26,12 @@ class HomeView extends StatelessWidget {
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
-          onPressed: () => AutoRouter.of(context).back(),
+          onPressed: () async {
+            final result = await screenCubit.logout();
+            if (context.mounted && result) {
+              AutoRouter.of(context).back();
+            }
+          },
         ),
         actions: [
           IconButton(
