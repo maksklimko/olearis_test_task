@@ -7,3 +7,5 @@ linter:
   rules: 
     - prefer_const_constructors
     - prefer_const_constructors_in_immutables
+
+#TODO: Add necessary rules from here: https://dart.dev/tools/linter-rules
