@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:olearis_test_task/config/injector/injector.dart';
+import 'package:olearis_test_task/config/navigation/app_router.dart';
+import 'package:olearis_test_task/config/theme/app_theme.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
+  runApp(MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key});
+
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return MaterialApp.router(
+      theme: AppTheme.light,
+      routerConfig: _appRouter.config(),
     );
   }
 }
