@@ -9,7 +9,10 @@ class GridViewItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(border: Border.all()),
       alignment: Alignment.center,
-      child: Text(text),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
     );
   }
 }

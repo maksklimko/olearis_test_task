@@ -60,35 +60,38 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _buildBody(HomeViewState state) {
-    return LayoutBuilder(builder: (context, constrains) {
-      return SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: constrains.maxHeight,
-            minWidth: double.infinity,
-          ),
-          child: IntrinsicHeight(
-            child: Column(
-              children: [
-                const Spacer(),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 40),
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 375),
-                    child: const AppLogo(
-                      isBorderShowed: true,
+    return SafeArea(
+      child: LayoutBuilder(builder: (context, constrains) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constrains.maxHeight,
+              minWidth: double.infinity,
+            ),
+            child: IntrinsicHeight(
+              child: Column(
+                children: [
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 30, vertical: 40),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 375),
+                      child: const AppLogo(
+                        isBorderShowed: true,
+                      ),
                     ),
                   ),
-                ),
-                const Spacer(),
-                _gridView(constrains.maxWidth, state.gridItems),
-              ],
+                  const Spacer(),
+                  _gridView(constrains.maxWidth, state.gridItems),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 
   _gridView(double width, List<String> items) {
